@@ -1,7 +1,11 @@
 package com.github.muhin007.iWeatherProvider;
 
+import com.github.muhin007.iWeatherProvider.weatherAgregator.WeatherAggregator;
+
 public class Main {
+
     public static void main(String[] args) {
-        System.out.println("Средняя температура в городе " + "nameCity" + " : " + "avgCurrentTemperature" + " градусов.");
+        WeatherAggregator wA = WeatherAggregator.getInstance();
+        wA.start();
     }
 }
