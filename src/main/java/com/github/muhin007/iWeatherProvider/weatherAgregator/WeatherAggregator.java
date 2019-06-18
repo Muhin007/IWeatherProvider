@@ -6,6 +6,7 @@ public class WeatherAggregator {
 
     private static volatile WeatherAggregator instance = null;
     private String cityName = null;
+    private double avgTemp, yandexTemp = 1, accuweatherTemp = 2, aerisweatherTemp = 3, worldweatheronlineTemp = 4;
 
     public static WeatherAggregator getInstance() {
         if (instance == null) {
@@ -20,7 +21,7 @@ public class WeatherAggregator {
 
     public void start(){
 
-        System.out.println("Средняя температура в городе " + getCityName() + " : " + "avgCurrentTemperature" + " градусов.");
+        System.out.println("Средняя температура в городе " + getCityName() + " : " + getAVGTemp() + "C.");
     }
 
     private String getCityName(){
@@ -28,5 +29,10 @@ public class WeatherAggregator {
         System.out.print("Введите название города: ");
         cityName = in.nextLine();
         return cityName;
+    }
+
+    private double getAVGTemp(){
+        avgTemp = (yandexTemp + accuweatherTemp + aerisweatherTemp + worldweatheronlineTemp)/4;
+        return avgTemp;
     }
 }
