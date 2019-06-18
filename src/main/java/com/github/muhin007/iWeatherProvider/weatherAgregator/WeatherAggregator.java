@@ -6,7 +6,7 @@ public class WeatherAggregator {
 
     private static volatile WeatherAggregator instance = null;
     private String cityName = null;
-    private double avgTemp, yandexTemp = 1, accuweatherTemp = 2, aerisweatherTemp = 3, worldweatheronlineTemp = 4;
+    private double avgTemp, yandexTemp = 0, accuweatherTemp = 0, aerisweatherTemp = 0, worldweatheronlineTemp = 0;
 
     public static WeatherAggregator getInstance() {
         if (instance == null) {
