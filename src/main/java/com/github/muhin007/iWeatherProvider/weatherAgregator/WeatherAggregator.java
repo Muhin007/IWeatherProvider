@@ -7,7 +7,7 @@ import java.util.Scanner;
 public class WeatherAggregator {
 
     private static volatile WeatherAggregator instance = null;
-    WeatherAdaptorYandex wAY = new WeatherAdaptorYandex();
+    private WeatherAdaptorYandex wAY = new WeatherAdaptorYandex();
     private String cityName = null;
     private double avgTemp, yandexTemp = wAY.getTempYandex(), accuweatherTemp = 0, aerisweatherTemp = 0, worldweatheronlineTemp = 0;
 
