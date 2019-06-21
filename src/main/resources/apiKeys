@@ -2,16 +2,22 @@ APIKeys
 
 yandex.ru
 API Key fae0f19b-5270-4466-9444-27ad5cd21e41
+запрос: https://api.weather.yandex.ru/v1/informers?lat=55.154&lon=61.429
+headers: X-Yandex-API-Key:fae0f19b-5270-4466-9444-27ad5cd21e41
 
 accuweather.com
 API Key	CPGaCAAXb5DJClu67wSZBsxJnVkcY8DG
+запрос геопозиции: http://dataservice.accuweather.com/locations/v1/search?q=chelyabinsk&apikey=CPGaCAAXb5DJClu67wSZBsxJnVkcY8DG
+запрос погоды: http://dataservice.accuweather.com/forecasts/v1/daily/1day/<location_key>?apikey=CPGaCAAXb5DJClu67wSZBsxJnVkcY8DG&language=ru-ru&metric=true
 
 aerisweather.com
 Access ID
 a04yWLdF5v83ZGGqanosb
 API Key
 2moGBj8LBRIlJdhaufg9qCxN7IPLCokJ3OjamuKK
+https://api.aerisapi.com/forecasts/chelyabinsk,?format=json&filter=day&limit=1&client_id=a04yWLdF5v83ZGGqanosb&client_secret=2moGBj8LBRIlJdhaufg9qCxN7IPLCokJ3OjamuKK
 
 worldweatheronline.com
 API Key bc27cfec9d314543bdf70006191806
+запрос: http://api.worldweatheronline.com/premium/v1/weather.ashx?key=bc27cfec9d314543bdf70006191806&q=Chelyabinsk&format=json&num_of_days=1&lang=ru
 
