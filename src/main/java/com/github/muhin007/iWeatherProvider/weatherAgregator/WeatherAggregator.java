@@ -1,15 +1,15 @@
 package com.github.muhin007.iWeatherProvider.weatherAgregator;
 
-import com.github.muhin007.iWeatherProvider.weatherAdaptor.yandex.WeatherAdaptorYandex;
+import com.github.muhin007.iWeatherProvider.weatherAdaptor.aerisapi.WeatherAdaptorAerisapi;
 
 import java.util.Scanner;
 
 public class WeatherAggregator {
 
     private static volatile WeatherAggregator instance = null;
-    private WeatherAdaptorYandex wAY = new WeatherAdaptorYandex();
-    private String cityName = null;
-    private double avgTemp, yandexTemp = wAY.getTempYandex(), accuweatherTemp = 0, aerisweatherTemp = 0, worldweatheronlineTemp = 0;
+    private WeatherAdaptorAerisapi wAA = new WeatherAdaptorAerisapi();
+    private static String cityName = null;
+    private double avgTemp, aerisapiTemp = wAA.getTempAerisapi(), accuweatherTemp = 0, aerisweatherTemp = 0, worldweatheronlineTemp = 0;
 
     public static WeatherAggregator getInstance() {
         if (instance == null) {
@@ -26,7 +26,7 @@ public class WeatherAggregator {
         System.out.println("Средняя температура в городе " + getCityName() + " : " + getAVGTemp() + "C.");
     }
 
-    public String getCityName(){
+    public static String getCityName(){
         Scanner in = new Scanner(System.in);
         System.out.print("Введите название города: ");
         cityName = in.nextLine();
@@ -34,7 +34,7 @@ public class WeatherAggregator {
     }
 
     private double getAVGTemp(){
-        avgTemp = (yandexTemp + accuweatherTemp + aerisweatherTemp + worldweatheronlineTemp)/4;
+        avgTemp = (aerisapiTemp + accuweatherTemp + aerisweatherTemp + worldweatheronlineTemp)/4;
         return avgTemp;
     }
 }
