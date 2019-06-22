@@ -1,6 +1,8 @@
 package com.github.muhin007.iWeatherProvider.weatherAgregator;
 
 import com.github.muhin007.iWeatherProvider.weatherAdaptor.aerisapi.WeatherAdaptorAerisapi;
+import com.github.muhin007.iWeatherProvider.weatherAdaptor.yandex.WeatherAdaptorYandex;
+import com.sun.xml.internal.bind.v2.TODO;
 
 import java.util.Scanner;
 
@@ -8,8 +10,9 @@ public class WeatherAggregator {
 
     private static volatile WeatherAggregator instance = null;
     private WeatherAdaptorAerisapi wAA = new WeatherAdaptorAerisapi();
+    private WeatherAdaptorYandex wAY = new WeatherAdaptorYandex();
     private static String cityName = null;
-    private double avgTemp, aerisapiTemp = wAA.getTempAerisapi(), accuweatherTemp = 0, aerisweatherTemp = 0, worldweatheronlineTemp = 0;
+    private double avgTemp, aerisapiTemp = wAA.getTempAerisapi(), accuweatherTemp = 0, yandexTemp = wAY.getTempFromYandex(), worldweatheronlineTemp = 0;
 
     public static WeatherAggregator getInstance() {
         if (instance == null) {
@@ -34,7 +37,8 @@ public class WeatherAggregator {
     }
 
     private double getAVGTemp(){
-        avgTemp = (aerisapiTemp + accuweatherTemp + aerisweatherTemp + worldweatheronlineTemp)/4;
+        System.out.println(aerisapiTemp + " " + accuweatherTemp + " " + yandexTemp + " " + worldweatheronlineTemp); //TODO стереть перед релизом
+        avgTemp = (aerisapiTemp + accuweatherTemp + yandexTemp + worldweatheronlineTemp)/4;
         return avgTemp;
     }
 }
