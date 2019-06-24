@@ -32,7 +32,7 @@ public class WeatherAggregator {
 
     private void getCityName() {
         Scanner in = new Scanner(System.in);
-        System.out.print("Введите название города: ");
+        System.out.print("Введите название города на английском языке: ");
         cityName = in.nextLine();
     }
 
