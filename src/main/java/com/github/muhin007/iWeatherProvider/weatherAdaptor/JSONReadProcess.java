@@ -19,15 +19,17 @@ public class JSONReadProcess {
 
         HttpURLConnection http = null;
         try {
+            assert url != null;
             http = (HttpURLConnection) url.openConnection();
         } catch (IOException e) {
             e.printStackTrace();
         }
         try {
+            assert http != null;
             BufferedReader br = new BufferedReader(new InputStreamReader(http.getInputStream()));
             char[] buf = new char[1000000];
 
-            int r = 0;
+            int r;
             do {
                 if ((r = br.read(buf)) > 0)
                     sb.append(new String(buf, 0, r));
@@ -35,6 +37,7 @@ public class JSONReadProcess {
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
+            assert http != null;
             http.disconnect();
         }
         return sb.toString();
