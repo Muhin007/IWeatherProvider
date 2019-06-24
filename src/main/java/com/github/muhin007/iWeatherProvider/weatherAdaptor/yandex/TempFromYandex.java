@@ -13,7 +13,7 @@ import okhttp3.Request;
 import java.io.IOException;
 
 public class TempFromYandex {
-    private static String city = WeatherAggregator.getCityName();
+    private static String city = WeatherAggregator.cityName;
     private double lat;
     private double lon;
     private int tempFromYandex;
