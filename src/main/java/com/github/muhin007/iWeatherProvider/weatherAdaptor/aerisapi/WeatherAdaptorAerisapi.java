@@ -11,7 +11,7 @@ import java.io.IOException;
 public class WeatherAdaptorAerisapi{
     private int tempFromAerisapi;
 
-    public int getTempAerisapi(String cityName) {
+    public int getTempFromAerisapi(String cityName) {
 
         String request = "https://api.aerisapi.com/forecasts/" + cityName + ",?format=json&filter=day&limit=1&client_id=a04yWLdF5v83ZGGqanosb&client_secret=2moGBj8LBRIlJdhaufg9qCxN7IPLCokJ3OjamuKK";
         String result = JSONReadProcess.performRequest(request);
@@ -22,6 +22,7 @@ public class WeatherAdaptorAerisapi{
         } catch (IOException e) {
             e.printStackTrace();
         }
+        assert temp != null;
         for (Response response : temp.getResponse()) {
             for (Period period : response.getPeriods()) {
                 tempFromAerisapi = (int) period.getMaxTempC();

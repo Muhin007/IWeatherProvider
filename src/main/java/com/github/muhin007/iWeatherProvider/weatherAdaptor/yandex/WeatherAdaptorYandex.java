@@ -17,6 +17,7 @@ public class WeatherAdaptorYandex {
     private int tempYandex;
 
     public int getTempFromYandex(String cityName) {
+
         String request = "https://api.aerisapi.com/forecasts/" + cityName + ",?format=json&filter=day&limit=1&client_id=a04yWLdF5v83ZGGqanosb&client_secret=2moGBj8LBRIlJdhaufg9qCxN7IPLCokJ3OjamuKK";
         String result = JSONReadProcess.performRequest(request);
         ObjectMapper mapper = new ObjectMapper();
@@ -26,6 +27,7 @@ public class WeatherAdaptorYandex {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        assert temp != null;
         for (Response response : temp.getResponse()) {
             lon = response.getLoc().getLong();
             lat = response.getLoc().getLat();
@@ -49,13 +51,15 @@ public class WeatherAdaptorYandex {
 
         String answer = null;
         try {
+            assert resp != null;
+            assert resp.body() != null;
             answer = resp.body().string();
         } catch (IOException e) {
             e.printStackTrace();
         }
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        TempYandex tempYandex = null;
+        TempYandex tempYandex;
         try {
             tempYandex = objectMapper.readValue(answer, TempYandex.class);
             this.tempYandex = (int) tempYandex.getFact().getTemp();

@@ -15,11 +15,15 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class WeatherAdaptorApixu {
-    private int tempFromApixu;
 
-    public int getTempApixu(String cityName) {
+    public int getTempFromApixu(String cityName) {
         String uri = "http://api.apixu.com/v1/current.xml?key=d85bbc64aab34428894192757192306&q=" + cityName;
 
+        String output = getString(uri);
+        return Integer.parseInt(output.split("<temp_c>")[1].split("</temp_c>")[0]);
+    }
+
+    public String getString(String uri) {
         URL url = null;
         try {
             url = new URL(uri);
@@ -36,10 +40,10 @@ public class WeatherAdaptorApixu {
         }
         Document doc = null;
         try {
+            assert db != null;
+            assert url != null;
             doc = db.parse(url.openStream());
-        } catch (SAXException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (SAXException | IOException e) {
             e.printStackTrace();
         }
 
@@ -50,6 +54,7 @@ public class WeatherAdaptorApixu {
         } catch (TransformerConfigurationException e) {
             e.printStackTrace();
         }
+        assert transformer != null;
         transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
         StringWriter writer = new StringWriter();
         try {
@@ -57,8 +62,6 @@ public class WeatherAdaptorApixu {
         } catch (TransformerException e) {
             e.printStackTrace();
         }
-        String output = writer.getBuffer().toString().replaceAll("\n|\r", "");
-        tempFromApixu = Integer.parseInt(output.split("<temp_c>")[1].split("</temp_c>")[0]);
-        return tempFromApixu;
+        return writer.getBuffer().toString().replaceAll("[\n\r]", "");
     }
 }
