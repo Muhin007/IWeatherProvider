@@ -2,6 +2,7 @@ package com.github.muhin007.iWeatherProvider.weatherAgregator;
 
 import com.github.muhin007.iWeatherProvider.weatherAdaptor.apixu.WeatherAdaptorApixu;
 import com.github.muhin007.iWeatherProvider.weatherAdaptor.aerisapi.WeatherAdaptorAerisapi;
+import com.github.muhin007.iWeatherProvider.weatherAdaptor.worldweatheronline.WeatherAdaptorWorldweatheronline;
 import com.github.muhin007.iWeatherProvider.weatherAdaptor.yandex.WeatherAdaptorYandex;
 
 import java.util.Arrays;
@@ -13,8 +14,9 @@ public class WeatherAggregator {
     private WeatherAdaptorAerisapi wAA = new WeatherAdaptorAerisapi();
     private WeatherAdaptorYandex wAY = new WeatherAdaptorYandex();
     private WeatherAdaptorApixu wAAp = new WeatherAdaptorApixu();
+    private WeatherAdaptorWorldweatheronline wAW = new WeatherAdaptorWorldweatheronline();
     public static String cityName;
-    private double avgTemp, aerisapiTemp = wAA.getTempAerisapi(), apixuTemp = wAAp.getTempApixu(), yandexTemp = wAY.getTempFromYandex(), worldweatheronlineTemp = 0;
+    private double avgTemp, aerisapiTemp = wAA.getTempAerisapi(), apixuTemp = wAAp.getTempApixu(), yandexTemp = wAY.getTempFromYandex(), worldweatheronlineTemp = wAW.getTempFromWorldweatheronline();
     double temps[] = {aerisapiTemp, apixuTemp, yandexTemp, worldweatheronlineTemp};
 
     public static WeatherAggregator getInstance() {
