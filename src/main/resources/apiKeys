@@ -21,3 +21,6 @@ worldweatheronline.com
 API Key bc27cfec9d314543bdf70006191806
 запрос: http://api.worldweatheronline.com/premium/v1/weather.ashx?key=bc27cfec9d314543bdf70006191806&q=Chelyabinsk&format=json&num_of_days=1&lang=ru
 
+apixu.com
+API key: d85bbc64aab34428894192757192306
+запрос: http://api.apixu.com/v1/current.xml?key=d85bbc64aab34428894192757192306&q=Paris
