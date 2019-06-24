@@ -10,7 +10,7 @@ public class WeatherAdaptorApixu extends WeatherAdaptor {
     public void requestTempAPI() {
         tempApixu = tempFromApixu.getTempFromApixu();
     }
-    public double getTempAccuweather() {
+    public double getTempApixu() {
         requestTempAPI();
         return tempApixu;
     }
