@@ -7,7 +7,6 @@ import com.github.muhin007.iWeatherProvider.weatherAdaptor.helper.XMLReadProcess
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 
 public class WeatherAdaptorWorldweatheronline implements WeatherAdaptor {
     public List<Integer> temp = new ArrayList<>();

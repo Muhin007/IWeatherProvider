@@ -1,18 +1,17 @@
 package com.github.muhin007.iWeatherProvider.weatherAdaptor.aerisapi;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.muhin007.iWeatherProvider.weatherAdaptor.helper.Error;
-import com.github.muhin007.iWeatherProvider.weatherAdaptor.helper.JSONReadProcess;
 import com.github.muhin007.iWeatherProvider.weatherAdaptor.WeatherAdaptor;
 import com.github.muhin007.iWeatherProvider.weatherAdaptor.aerisapi.JSONClass.Period;
 import com.github.muhin007.iWeatherProvider.weatherAdaptor.aerisapi.JSONClass.Response;
 import com.github.muhin007.iWeatherProvider.weatherAdaptor.aerisapi.JSONClass.Temp;
+import com.github.muhin007.iWeatherProvider.weatherAdaptor.helper.Error;
+import com.github.muhin007.iWeatherProvider.weatherAdaptor.helper.JSONReadProcess;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 
 public class WeatherAdaptorAerisapi implements WeatherAdaptor {
 

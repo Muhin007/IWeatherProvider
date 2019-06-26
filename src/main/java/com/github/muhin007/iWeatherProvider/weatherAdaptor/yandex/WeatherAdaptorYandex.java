@@ -9,12 +9,10 @@ import com.github.muhin007.iWeatherProvider.weatherAdaptor.yandex.JSONClass.Temp
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 
 public class WeatherAdaptorYandex implements WeatherAdaptor {
     private Coordinate coordinate = new Coordinate();
