@@ -1,4 +1,4 @@
-package com.github.muhin007.iWeatherProvider.weatherAdaptor;
+package com.github.muhin007.iWeatherProvider.weatherAdaptor.helper;
 
 import java.io.BufferedReader;
 import java.io.IOException;
