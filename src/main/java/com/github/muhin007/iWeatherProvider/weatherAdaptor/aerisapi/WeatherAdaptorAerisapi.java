@@ -1,6 +1,7 @@
 package com.github.muhin007.iWeatherProvider.weatherAdaptor.aerisapi;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.muhin007.iWeatherProvider.weatherAdaptor.helper.Error;
 import com.github.muhin007.iWeatherProvider.weatherAdaptor.helper.JSONReadProcess;
 import com.github.muhin007.iWeatherProvider.weatherAdaptor.WeatherAdaptor;
 import com.github.muhin007.iWeatherProvider.weatherAdaptor.aerisapi.JSONClass.Period;
@@ -28,6 +29,7 @@ public class WeatherAdaptorAerisapi implements WeatherAdaptor {
                 temp = mapper.readValue(result, Temp.class);
             } catch (IOException e) {
                 System.out.println("Ошибка получения данных от сайта. Попробуйте позднее.");
+                System.exit(0);
                 e.printStackTrace();
             }
             assert temp != null;
@@ -40,12 +42,7 @@ public class WeatherAdaptorAerisapi implements WeatherAdaptor {
             return tempFromAerisapi;
         });
         int temp = 0;
-        try {
-            temp = future.get();
-        } catch (InterruptedException | ExecutionException e) {
-            System.out.println("Ошибка получения данных от сайта. Попробуйте позднее.");
-            e.printStackTrace();
-        }
+        temp = Error.exceptionFuture(future, temp);
         writeTemp(temp);
         return temp;
     }

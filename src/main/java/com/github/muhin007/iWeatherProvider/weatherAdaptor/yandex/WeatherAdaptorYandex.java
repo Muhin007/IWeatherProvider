@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.muhin007.iWeatherProvider.weatherAdaptor.WeatherAdaptor;
 import com.github.muhin007.iWeatherProvider.weatherAdaptor.helper.Coordinate;
+import com.github.muhin007.iWeatherProvider.weatherAdaptor.helper.Error;
 import com.github.muhin007.iWeatherProvider.weatherAdaptor.yandex.JSONClass.TempYandex;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -24,7 +25,7 @@ public class WeatherAdaptorYandex implements WeatherAdaptor {
 
     @Override
     public int getTemp(String cityName) {
-        final CompletableFuture<Integer> futureApixu = CompletableFuture.supplyAsync(() -> {
+        final CompletableFuture<Integer> future = CompletableFuture.supplyAsync(() -> {
             coordinate.getCoordinate(cityName);
             OkHttpClient client = new OkHttpClient();
             Request req = new Request.Builder()
@@ -47,6 +48,7 @@ public class WeatherAdaptorYandex implements WeatherAdaptor {
                 answer = resp.body().string();
             } catch (IOException e) {
                 System.out.println("Ошибка получения данных от сайта. Попробуйте позднее.");
+                System.exit(0);
                 e.printStackTrace();
             }
             ObjectMapper objectMapper = new ObjectMapper();
@@ -57,18 +59,14 @@ public class WeatherAdaptorYandex implements WeatherAdaptor {
                 this.tempYandex = (int) tempYandex.getFact().getTemp();
             } catch (IOException e) {
                 System.out.println("Ошибка получения данных от сайта. Попробуйте позднее.");
+                System.exit(0);
                 e.printStackTrace();
             }
             writeTemp(this.tempYandex);
             return this.tempYandex;
         });
         int temp = 0;
-        try {
-            temp = futureApixu.get();
-        } catch (InterruptedException | ExecutionException e) {
-            System.out.println("Ошибка получения данных от сайта. Попробуйте позднее.");
-            e.printStackTrace();
-        }
+        temp = Error.exceptionFuture(future, temp);
         writeTemp(temp);
         return temp;
     }

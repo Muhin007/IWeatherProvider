@@ -1,6 +1,7 @@
 package com.github.muhin007.iWeatherProvider.weatherAdaptor.apixu;
 
 import com.github.muhin007.iWeatherProvider.weatherAdaptor.WeatherAdaptor;
+import com.github.muhin007.iWeatherProvider.weatherAdaptor.helper.Error;
 import com.github.muhin007.iWeatherProvider.weatherAdaptor.helper.XMLReadProcess;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,12 +21,7 @@ public class WeatherAdaptorApixu implements WeatherAdaptor {
             return temp;
         });
         int temp = 0;
-        try {
-            temp = future.get();
-        } catch (InterruptedException | ExecutionException e) {
-            System.out.println("Ошибка получения данных от сайта. Попробуйте позднее.");
-            e.printStackTrace();
-        }
+        temp = Error.exceptionFuture(future, temp);
         writeTemp(temp);
         return temp;
     }
