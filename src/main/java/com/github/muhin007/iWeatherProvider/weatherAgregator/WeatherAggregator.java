@@ -7,8 +7,6 @@ import com.github.muhin007.iWeatherProvider.weatherAdaptor.yandex.WeatherAdaptor
 
 import java.util.Arrays;
 import java.util.Scanner;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 
 public class WeatherAggregator {
 
@@ -38,55 +36,12 @@ public class WeatherAggregator {
 
     public void AVGTemp() {
         getCityName();
-        int aerisapiTemp = futureTempAerisapi();
-        int yandexTemp = futureTempYandex();
-        int apixuTemp = futureTempApixu();
-        int worldweatheronlineTemp = futureTempWorldweatheronline();
-        int[] temps = {aerisapiTemp, yandexTemp, apixuTemp, worldweatheronlineTemp};
+        wAY.getTemp(cityName);
+        wAAp.getTemp(cityName);
+        wAA.getTemp(cityName);
+        wAW.getTemp(cityName);
+        int[] temps = {wAA.temp.get(0), wAW.temp.get(0), wAAp.temp.get(0), wAY.temp.get(0)};
         double avgTemp = Arrays.stream(temps).sum() / temps.length;
         System.out.println("Средняя температура в городе " + cityName + " : " + avgTemp + "C.");
-    }
-
-    private int futureTempAerisapi() {
-        final CompletableFuture<Integer> future = CompletableFuture.supplyAsync(() -> wAA.getTempFromAerisapi(cityName));
-        int temp = 0;
-        try {
-            temp = future.get();
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
-        }
-        return temp;
-    }
-
-    private int futureTempYandex() {
-        final CompletableFuture<Integer> future = CompletableFuture.supplyAsync(() ->wAY.getTempFromYandex(cityName));
-        int temp = 0;
-        try {
-            temp = future.get();
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
-        }
-        return temp;
-    }
-
-    private int futureTempApixu() {
-        final CompletableFuture<Integer> future = CompletableFuture.supplyAsync(() -> wAAp.getTempFromApixu(cityName));
-        int temp = 0;
-        try {
-            temp = future.get();
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
-        }
-        return temp;
-    }
-    private int futureTempWorldweatheronline() {
-        final CompletableFuture<Integer> future = CompletableFuture.supplyAsync(() -> wAW.getTempFromWorldweatheronline(cityName));
-        int temp = 0;
-        try {
-            temp = future.get();
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
-        }
-        return temp;
     }
 }

@@ -1,67 +1,37 @@
 package com.github.muhin007.iWeatherProvider.weatherAdaptor.apixu;
 
-import org.w3c.dom.Document;
-import org.xml.sax.SAXException;
+import com.github.muhin007.iWeatherProvider.weatherAdaptor.WeatherAdaptor;
+import com.github.muhin007.iWeatherProvider.weatherAdaptor.helper.XMLReadProcess;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.*;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-import java.io.IOException;
-import java.io.StringWriter;
-import java.net.MalformedURLException;
-import java.net.URL;
+public class WeatherAdaptorApixu implements WeatherAdaptor {
+    public List<Integer> temp = new ArrayList<>();
 
-public class WeatherAdaptorApixu {
-
-    public int getTempFromApixu(String cityName) {
-        String uri = "http://api.apixu.com/v1/current.xml?key=d85bbc64aab34428894192757192306&q=" + cityName;
-
-        String output = getString(uri);
-        return Integer.parseInt(output.split("<temp_c>")[1].split("</temp_c>")[0]);
+    @Override
+    public int getTemp(String cityName) {
+        final CompletableFuture<Integer> future = CompletableFuture.supplyAsync(() -> {
+            String uri = "http://api.apixu.com/v1/current.xml?key=d85bbc64aab34428894192757192306&q=" + cityName;
+            String output = XMLReadProcess.getString(uri);
+            int temp = Integer.parseInt(output.split("<temp_c>")[1].split("</temp_c>")[0]);
+            writeTemp(temp);
+            return temp;
+        });
+        int temp = 0;
+        try {
+            temp = future.get();
+        } catch (InterruptedException | ExecutionException e) {
+            System.out.println("Ошибка получения данных от сайта. Попробуйте позднее.");
+            e.printStackTrace();
+        }
+        writeTemp(temp);
+        return temp;
     }
 
-    public String getString(String uri) {
-        URL url = null;
-        try {
-            url = new URL(uri);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-
-        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-        DocumentBuilder db = null;
-        try {
-            db = dbf.newDocumentBuilder();
-        } catch (ParserConfigurationException e) {
-            e.printStackTrace();
-        }
-        Document doc = null;
-        try {
-            assert db != null;
-            assert url != null;
-            doc = db.parse(url.openStream());
-        } catch (SAXException | IOException e) {
-            e.printStackTrace();
-        }
-
-        TransformerFactory tf = TransformerFactory.newInstance();
-        Transformer transformer = null;
-        try {
-            transformer = tf.newTransformer();
-        } catch (TransformerConfigurationException e) {
-            e.printStackTrace();
-        }
-        assert transformer != null;
-        transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
-        StringWriter writer = new StringWriter();
-        try {
-            transformer.transform(new DOMSource(doc), new StreamResult(writer));
-        } catch (TransformerException e) {
-            e.printStackTrace();
-        }
-        return writer.getBuffer().toString().replaceAll("[\n\r]", "");
+    @Override
+    public void writeTemp(int cityTemp) {
+        temp.add(cityTemp);
     }
 }
