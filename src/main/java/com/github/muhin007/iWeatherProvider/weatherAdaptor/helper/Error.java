@@ -8,9 +8,7 @@ public class Error {
         try {
             temp = future.get();
         } catch (InterruptedException | ExecutionException e) {
-            System.out.println("Ошибка обработки данных. Попробуйте еще раз.");
-            System.exit(0);
-            e.printStackTrace();
+            System.out.println("Данные с одного из ресурсов не получены, но");
         }
         return temp;
     }
