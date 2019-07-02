@@ -1,17 +1,13 @@
 package com.github.muhin007.iWeatherProvider.weatherAgregator;
 
-import com.github.muhin007.iWeatherProvider.config.ConfigIWeatherProvider;
-import com.github.muhin007.iWeatherProvider.weatherAdaptor.aerisapi.WeatherAdaptorAerisapi;
-import com.github.muhin007.iWeatherProvider.weatherAdaptor.apixu.WeatherAdaptorApixu;
-import com.github.muhin007.iWeatherProvider.weatherAdaptor.worldweatheronline.WeatherAdaptorWorldweatheronline;
-import com.github.muhin007.iWeatherProvider.weatherAdaptor.yandex.WeatherAdaptorYandex;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import com.github.muhin007.iWeatherProvider.weatherAdaptor.Site;
+import com.github.muhin007.iWeatherProvider.weatherAdaptor.SiteSelector;
 
 import java.util.Arrays;
 import java.util.Scanner;
 
 public class WeatherAggregator {
+    SiteSelector siteSelector = new SiteSelector();
 
     private static volatile WeatherAggregator instance = null;
 
@@ -35,14 +31,9 @@ public class WeatherAggregator {
     }
 
     public void AVGTemp() {
-        ApplicationContext context = new AnnotationConfigApplicationContext(ConfigIWeatherProvider.class);
         getCityName();
-        WeatherAdaptorApixu weatherAdaptorApixu = context.getBean(WeatherAdaptorApixu.class);
-        WeatherAdaptorAerisapi weatherAdaptorAerisapi = context.getBean(WeatherAdaptorAerisapi.class);
-        WeatherAdaptorYandex weatherAdaptorYandex = context.getBean(WeatherAdaptorYandex.class);
-        WeatherAdaptorWorldweatheronline weatherAdaptorWorldweatheronline = context.getBean(WeatherAdaptorWorldweatheronline.class);
-        int[] temps = {weatherAdaptorApixu.getTemp(cityName), weatherAdaptorAerisapi.getTemp(cityName),
-                weatherAdaptorYandex.getTemp(cityName), weatherAdaptorWorldweatheronline.getTemp(cityName)};
+        int[] temps = {siteSelector.getWeatherAdaptor(Site.YANDEX).getTemp(cityName), siteSelector.getWeatherAdaptor(Site.AERISAPI).getTemp(cityName),
+                siteSelector.getWeatherAdaptor(Site.APIXU).getTemp(cityName), siteSelector.getWeatherAdaptor(Site.WORLDWEATHERONLINE).getTemp(cityName)};
         double avgTemp = Arrays.stream(temps).sum() / temps.length;
         System.out.println("Средняя температура в городе " + cityName + " : " + avgTemp + "C.");
     }
