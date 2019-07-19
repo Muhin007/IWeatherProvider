@@ -33,10 +33,11 @@ public class WeatherAggregator {
 
     public void AVGTemp() {
         getCityName();
-        int[] temps = {new WeatherAdaptorYandex().getTemp(cityName),
-                new WeatherAdaptorAerisapi().getTemp(cityName),
-                new WeatherAdaptorApixu().getTemp(cityName),
-                new WeatherAdaptorWorldweatheronline().getTemp(cityName)};
+        int yandex = new WeatherAdaptorYandex().getTemp(cityName);
+        int aerisapi = new WeatherAdaptorAerisapi().getTemp(cityName);
+        int apixu = new WeatherAdaptorApixu().getTemp(cityName);
+        int wwo = new WeatherAdaptorWorldweatheronline().getTemp(cityName);
+        int[] temps = {yandex, aerisapi, apixu, wwo};
         double avgTemp = Arrays.stream(temps).sum() / temps.length;
         System.out.println("Средняя температура в городе " + cityName + " : " + avgTemp + "C.");
     }
