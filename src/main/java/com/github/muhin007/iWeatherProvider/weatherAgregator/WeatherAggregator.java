@@ -33,7 +33,7 @@ public class WeatherAggregator {
 
     public void AVGTemp() {
         getCityName();
-        int[] temps = new int[]{new WeatherAdaptorYandex().getTemp(cityName),
+        int[] temps = {new WeatherAdaptorYandex().getTemp(cityName),
                 new WeatherAdaptorAerisapi().getTemp(cityName),
                 new WeatherAdaptorApixu().getTemp(cityName),
                 new WeatherAdaptorWorldweatheronline().getTemp(cityName)};
