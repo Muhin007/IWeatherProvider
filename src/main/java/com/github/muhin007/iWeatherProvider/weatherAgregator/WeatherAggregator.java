@@ -1,13 +1,14 @@
 package com.github.muhin007.iWeatherProvider.weatherAgregator;
 
-import com.github.muhin007.iWeatherProvider.weatherAdaptor.Site;
-import com.github.muhin007.iWeatherProvider.weatherAdaptor.SiteSelector;
+import com.github.muhin007.iWeatherProvider.weatherAdaptor.aerisapi.WeatherAdaptorAerisapi;
+import com.github.muhin007.iWeatherProvider.weatherAdaptor.apixu.WeatherAdaptorApixu;
+import com.github.muhin007.iWeatherProvider.weatherAdaptor.worldweatheronline.WeatherAdaptorWorldweatheronline;
+import com.github.muhin007.iWeatherProvider.weatherAdaptor.yandex.WeatherAdaptorYandex;
 
 import java.util.Arrays;
 import java.util.Scanner;
 
 public class WeatherAggregator {
-    SiteSelector siteSelector = new SiteSelector();
 
     private static volatile WeatherAggregator instance = null;
 
@@ -32,8 +33,10 @@ public class WeatherAggregator {
 
     public void AVGTemp() {
         getCityName();
-        int[] temps = {siteSelector.getWeatherAdaptor(Site.YANDEX).getTemp(cityName), siteSelector.getWeatherAdaptor(Site.AERISAPI).getTemp(cityName),
-                siteSelector.getWeatherAdaptor(Site.APIXU).getTemp(cityName), siteSelector.getWeatherAdaptor(Site.WORLDWEATHERONLINE).getTemp(cityName)};
+        int[] temps = new int[]{new WeatherAdaptorYandex().getTemp(cityName),
+                new WeatherAdaptorAerisapi().getTemp(cityName),
+                new WeatherAdaptorApixu().getTemp(cityName),
+                new WeatherAdaptorWorldweatheronline().getTemp(cityName)};
         double avgTemp = Arrays.stream(temps).sum() / temps.length;
         System.out.println("Средняя температура в городе " + cityName + " : " + avgTemp + "C.");
     }
