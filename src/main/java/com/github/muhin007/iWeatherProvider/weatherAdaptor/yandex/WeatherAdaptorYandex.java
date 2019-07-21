@@ -10,21 +10,19 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public class WeatherAdaptorYandex implements WeatherAdaptor {
+
     private Coordinate coordinate = new Coordinate();
-    public List<Integer> temp = new ArrayList<>();
     private double lat;
     private double lon;
     private int tempYandex;
 
     @Override
-    public int getTemp(String cityName) {
+    public int getTemp(String  cityName) {
         final CompletableFuture<Integer> future = CompletableFuture.supplyAsync(() -> {
-            coordinate.getCoordinate(cityName);
+            coordinate.getCoordinate(String.valueOf(cityName));
             OkHttpClient client = new OkHttpClient();
             Request req = new Request.Builder()
                     .url("https://api.weather.yandex.ru/v1/informers?lat=" + lat + "&lon=" + lon)
@@ -60,17 +58,10 @@ public class WeatherAdaptorYandex implements WeatherAdaptor {
                 System.exit(0);
                 e.printStackTrace();
             }
-            writeTemp(this.tempYandex);
             return this.tempYandex;
         });
         int temp = 0;
         temp = Error.exceptionFuture(future, temp);
-        writeTemp(temp);
         return temp;
-    }
-
-    @Override
-    public void writeTemp(int cityTemp) {
-        temp.add(cityTemp);
     }
 }

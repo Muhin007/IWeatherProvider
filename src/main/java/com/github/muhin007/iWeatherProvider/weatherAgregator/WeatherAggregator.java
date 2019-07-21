@@ -1,15 +1,14 @@
 package com.github.muhin007.iWeatherProvider.weatherAgregator;
 
+import com.github.muhin007.iWeatherProvider.weatherAdaptor.WeatherAdaptor;
 import com.github.muhin007.iWeatherProvider.weatherAdaptor.aerisapi.WeatherAdaptorAerisapi;
 import com.github.muhin007.iWeatherProvider.weatherAdaptor.apixu.WeatherAdaptorApixu;
 import com.github.muhin007.iWeatherProvider.weatherAdaptor.worldweatheronline.WeatherAdaptorWorldweatheronline;
 import com.github.muhin007.iWeatherProvider.weatherAdaptor.yandex.WeatherAdaptorYandex;
 
-import java.util.Arrays;
-import java.util.Scanner;
+import java.util.*;
 
 public class WeatherAggregator {
-
     private static volatile WeatherAggregator instance = null;
 
     private String cityName;
@@ -32,12 +31,13 @@ public class WeatherAggregator {
     }
 
     public void AVGTemp() {
+
         getCityName();
-        int yandex = new WeatherAdaptorYandex().getTemp(cityName);
-        int aerisapi = new WeatherAdaptorAerisapi().getTemp(cityName);
-        int apixu = new WeatherAdaptorApixu().getTemp(cityName);
-        int wwo = new WeatherAdaptorWorldweatheronline().getTemp(cityName);
-        int[] temps = {yandex, aerisapi, apixu, wwo};
+        int[] temps = new int[0];
+        WeatherAdaptor[] weatherAdaptors = {new WeatherAdaptorApixu(), new WeatherAdaptorAerisapi(), new WeatherAdaptorYandex(), new WeatherAdaptorWorldweatheronline()};
+        for (int i = 0; i < 4; i++) {
+            temps = new int[]{weatherAdaptors[i].getTemp(cityName)};
+        }
         double avgTemp = Arrays.stream(temps).sum() / temps.length;
         System.out.println("Средняя температура в городе " + cityName + " : " + avgTemp + "C.");
     }

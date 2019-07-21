@@ -9,13 +9,9 @@ import com.github.muhin007.iWeatherProvider.weatherAdaptor.helper.Error;
 import com.github.muhin007.iWeatherProvider.weatherAdaptor.helper.JSONReadProcess;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public class WeatherAdaptorAerisapi implements WeatherAdaptor {
-
-    public List<Integer> temp = new ArrayList<>();
 
     @Override
     public int getTemp(String cityName) {
@@ -42,12 +38,6 @@ public class WeatherAdaptorAerisapi implements WeatherAdaptor {
         });
         int temp = 0;
         temp = Error.exceptionFuture(future, temp);
-        writeTemp(temp);
         return temp;
-    }
-
-    @Override
-    public void writeTemp(int cityTemp) {
-        temp.add(cityTemp);
     }
 }
