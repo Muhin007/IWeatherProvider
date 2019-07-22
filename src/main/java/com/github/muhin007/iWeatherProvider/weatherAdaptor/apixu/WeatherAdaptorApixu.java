@@ -13,8 +13,7 @@ public class WeatherAdaptorApixu implements WeatherAdaptor {
         final CompletableFuture<Integer> future = CompletableFuture.supplyAsync(() -> {
             String uri = "http://api.apixu.com/v1/current.xml?key=d85bbc64aab34428894192757192306&q=" + cityName;
             String output = XMLReadProcess.getString(uri);
-            int temp = Integer.parseInt(output.split("<temp_c>")[1].split("</temp_c>")[0]);
-            return temp;
+            return Integer.parseInt(output.split("<temp_c>")[1].split("</temp_c>")[0]);
         });
         int temp = 0;
         temp = Error.exceptionFuture(future, temp);

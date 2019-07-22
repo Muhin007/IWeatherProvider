@@ -13,8 +13,7 @@ public class WeatherAdaptorWorldweatheronline implements WeatherAdaptor {
         final CompletableFuture<Integer> future = CompletableFuture.supplyAsync(() -> {
             String uri = "http://api.worldweatheronline.com/premium/v1/weather.ashx?key=bc27cfec9d314543bdf70006191806&q=" + cityName + "&format=xml&num_of_days=1&lang=ru";
             String output = XMLReadProcess.getString(uri);
-            int temp = Integer.parseInt(output.split("<temp_C>")[1].split("</temp_C>")[0]);
-            return temp;
+            return Integer.parseInt(output.split("<temp_C>")[1].split("</temp_C>")[0]);
         });
         int temp = 0;
         temp = Error.exceptionFuture(future, temp);

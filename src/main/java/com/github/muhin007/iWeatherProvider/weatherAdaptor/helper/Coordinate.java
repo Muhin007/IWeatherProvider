@@ -7,6 +7,14 @@ import com.github.muhin007.iWeatherProvider.weatherAdaptor.aerisapi.JSONClass.Te
 import java.io.IOException;
 
 public class Coordinate {
+    private double lon;
+    private double lat;
+    public double getLon() {
+        return lon;
+    }
+    public double getLat() {
+        return lat;
+    }
 
     public void getCoordinate(String cityName) {
         String request = "https://api.aerisapi.com/forecasts/" + cityName + ",?format=json&filter=day&limit=1&client_id=a04yWLdF5v83ZGGqanosb&client_secret=2moGBj8LBRIlJdhaufg9qCxN7IPLCokJ3OjamuKK";
@@ -21,8 +29,8 @@ public class Coordinate {
         }
         assert temp != null;
         for (Response response : temp.getResponse()) {
-            double lon = response.getLoc().getLong();
-            double lat = response.getLoc().getLat();
+            lon = response.getLoc().getLong();
+            lat = response.getLoc().getLat();
         }
     }
 }

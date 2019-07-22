@@ -15,8 +15,8 @@ import java.util.concurrent.CompletableFuture;
 public class WeatherAdaptorYandex implements WeatherAdaptor {
 
     private Coordinate coordinate = new Coordinate();
-    private double lat;
-    private double lon;
+    private double lat = coordinate.getLat();
+    private double lon = coordinate.getLon();
     private int tempYandex;
 
     @Override
