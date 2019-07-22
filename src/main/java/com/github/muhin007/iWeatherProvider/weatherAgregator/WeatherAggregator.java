@@ -33,12 +33,12 @@ public class WeatherAggregator {
     public void AVGTemp() {
 
         getCityName();
-        int[] temps = new int[0];
+        int sum = 0;
         WeatherAdaptor[] weatherAdaptors = {new WeatherAdaptorApixu(), new WeatherAdaptorAerisapi(), new WeatherAdaptorYandex(), new WeatherAdaptorWorldweatheronline()};
         for (int i = 0; i < 4; i++) {
-            temps = new int[]{weatherAdaptors[i].getTemp(cityName)};
+            sum += weatherAdaptors[i].getTemp(cityName);
         }
-        double avgTemp = Arrays.stream(temps).sum() / temps.length;
+        double avgTemp = sum / weatherAdaptors.length;
         System.out.println("Средняя температура в городе " + cityName + " : " + avgTemp + "C.");
     }
 }
